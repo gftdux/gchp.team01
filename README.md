@@ -19,3 +19,12 @@ LLM한테 나온 유형의 특징 설명 시키기 - 유형의 이름, 특징, �
 
 성별 정해 말아
 일단 미소녀로 만들어 놓고 미소년은 나중에 추가
+
+
+### explain_module.py 사용 예시
+```
+explainer = LoveStyleExplainer()
+result = explainer.explain("HKDJ")
+print(result)
+```
+유효성 검사를 다른 모듈로 빼긴 할 건데 호출을 설명 모듈 안에서 할지 아니면 메인 프로그램 루프에 포함시킬지는 미정.
