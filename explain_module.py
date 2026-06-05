@@ -22,6 +22,27 @@ TYPE_AXES = {
         "B": ("방치형", "서로의 자유와 개인 시간을 중요하게 느끼는 편"),
     },
 }
+TYPES = [
+    "HKAJ",  # 집돌이 · 다정형 · 회피형 · 집착형
+    "HKAB",  # 집돌이 · 다정형 · 회피형 · 방치형
+    "HKDJ",  # 집돌이 · 다정형 · 돌진형 · 집착형
+    "HKDB",  # 집돌이 · 다정형 · 돌진형 · 방치형
+
+    "HMAJ",  # 집돌이 · 무심형 · 회피형 · 집착형
+    "HMAB",  # 집돌이 · 무심형 · 회피형 · 방치형
+    "HMDJ",  # 집돌이 · 무심형 · 돌진형 · 집착형
+    "HMDB",  # 집돌이 · 무심형 · 돌진형 · 방치형
+
+    "OKAJ",  # 야외형 · 다정형 · 회피형 · 집착형
+    "OKAB",  # 야외형 · 다정형 · 회피형 · 방치형
+    "OKDJ",  # 야외형 · 다정형 · 돌진형 · 집착형
+    "OKDB",  # 야외형 · 다정형 · 돌진형 · 방치형
+
+    "OMAJ",  # 야외형 · 무심형 · 회피형 · 집착형
+    "OMAB",  # 야외형 · 무심형 · 회피형 · 방치형
+    "OMDJ",  # 야외형 · 무심형 · 돌진형 · 집착형
+    "OMDB",  # 야외형 · 무심형 · 돌진형 · 방치형
+]
 
 
 def validate_code(code):
@@ -51,8 +72,11 @@ def build_prompt(code):
 너는 연애 성향을 담백하고 직관적으로 설명하는 한국어 상담형 도우미야.
 
 사용자의 연애 스타일 코드는 {code}야.
+코드는 각 axis마다 2가지 글자 중 하나로 구성되어 있어.
 각 글자의 의미는 다음과 같아.
 {describe_code(code)}
+따라서 연애 스타일 코드는 다음 16가지 중 하나로 나타내어져.
+{TYPES}
 
 다음 형식으로 답해줘.
 1. 한 줄 요약
@@ -67,6 +91,7 @@ def build_prompt(code):
 - 오글거리거나 과장된 표현은 피하고 담백하게 써.
 - 비유는 과하게 쓰지 말고, 필요한 내용은 직관적으로 설명해.
 - 사람을 단정하거나 상처 주는 표현은 피하고, 성향의 장단점을 균형 있게 설명해.
+- 잘 맞는 상대의 연애 스타일 코드를 제시할 때에는 {TYPES}중 하나를 제시해. 그러나 자신의 연애 스타일 코드와 모든 글자가 같아서는 안 돼.
 """.strip()
 
 
@@ -89,10 +114,28 @@ def request_love_style(code, api_key):
     }
 
     response = requests.post(API_URL, headers=headers, json=payload, timeout=60)
+    if response.status_code == 429:
+        retry_after = response.headers.get("Retry-After")
+        try:
+            retry_after = int(retry_after) if retry_after else None
+        except ValueError:
+            retry_after = None
+
+        raise RateLimitError(
+            "API rate limit reached. Please try again later.",
+            retry_after=retry_after,
+        )
+
     response.raise_for_status()
 
     data = response.json()
     return data["choices"][0]["message"]["content"].strip()
+
+
+class RateLimitError(RuntimeError):
+    def __init__(self, message, retry_after=None):
+        super().__init__(message)
+        self.retry_after = retry_after
 
 
 class LoveStyleExplainer:
