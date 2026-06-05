@@ -13,7 +13,7 @@ class get_result_module:
         explainer = LoveStyleExplainer()
         for retry_count in range(MAX_RETRY_COUNT + 1):
             try:
-                print(f"{love_style} result is being generated...", flush=True)
+                print(f"{love_style} result is being generated...\n\n\n", flush=True)
                 return explainer.explain(love_style)
             except RateLimitError as error:
                 if retry_count == MAX_RETRY_COUNT:

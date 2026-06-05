@@ -1,4 +1,6 @@
 import time
+from get_result_module import get_result_module
+
 
 # 질문
 HO_questions = [
@@ -188,9 +190,8 @@ def dialogue(set_idx):
     else:
         user_mbti['B'] += 1
 
-
-# 마무리 및 성격유형 계산
-def determine_mbti():
+# 마무리 멘트
+def final_dialogue():
     time.sleep(1)
     print(".")
     time.sleep(1)
@@ -203,18 +204,25 @@ def determine_mbti():
     time.sleep(1)
     print("...\n")
     time.sleep(2)
-    
+
+# 성격유형 판단
+def determine_mbti():
     mbti_result = ""
     mbti_result += 'H' if user_mbti['H'] > user_mbti['O'] else 'O'
     mbti_result += 'K' if user_mbti['K'] > user_mbti['M'] else 'M'
     mbti_result += 'A' if user_mbti['A'] > user_mbti['D'] else 'D'
     mbti_result += 'J' if user_mbti['J'] > user_mbti['B'] else 'B'
     
-    print(f"당신의 연애유형은 {mbti_result}입니다.")
+    return mbti_result
 
 
 # 메인 실행부
 if __name__ == "__main__":
     for i in range(3):
         dialogue(i)
-    determine_mbti()
+    final_dialogue()
+    mbti_result = determine_mbti()
+    print(f"당신의 연애 스타일 코드는 {mbti_result}입니다.")
+    explainer = get_result_module()
+    explain_result = explainer.get_result(mbti_result)
+    print(explain_result)
