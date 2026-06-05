@@ -1,6 +1,5 @@
 import time
 from get_result_module import get_result_module
-import random
 
 # 질문
 HO_questions = [
