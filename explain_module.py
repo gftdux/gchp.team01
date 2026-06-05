@@ -126,6 +126,9 @@ def request_love_style(code, api_key):
             retry_after=retry_after,
         )
 
+    if response.status_code in (401, 403):
+        raise InvalidAPIKeyError("API키가 유효하지 않습니다.")
+
     response.raise_for_status()
 
     data = response.json()
@@ -138,11 +141,22 @@ class RateLimitError(RuntimeError):
         self.retry_after = retry_after
 
 
+class InvalidAPIKeyError(ValueError):
+    pass
+
+
 class LoveStyleExplainer:
     def __init__(self, api_key=OPENROUTER_API_KEY):
         self.api_key = api_key
 
     def explain(self, code):
+        if (
+            not self.api_key
+            or self.api_key.startswith("여기에_")
+            or self.api_key.startswith("?")
+        ):
+            raise InvalidAPIKeyError("API키가 유효하지 않습니다.")
+
         try:
             code = validate_code(code)
         except ValueError as error:
