@@ -1,8 +1,10 @@
+import os
+
 import requests
 
 MODEL = "openrouter/free"
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
-OPENROUTER_API_KEY = "여기에_OPENROUTER_API_KEY_입력"
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
 
 TYPE_AXES = {
     0: {
