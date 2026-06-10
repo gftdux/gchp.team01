@@ -1,5 +1,6 @@
 import time
 import sys
+from explain_module import validate_openrouter_api_key
 from get_result_module import get_result_module
 
 
@@ -345,7 +346,16 @@ def determine_mbti():
 
 
 if __name__ == "__main__":
-    
+    if not validate_openrouter_api_key():
+        try:
+            input(
+                "openrouter api 키가 유효하지 않습니다. "
+                "환경변수를 다시 확인해주시기 바랍니다. (엔터를 눌러 종료)"
+            )
+        except EOFError:
+            pass
+        raise SystemExit
+
     # 첫 번째 사이클 (인덱스: 0)
     # 순서: A/D -> K/M -> H/O -> J/B
     play_intro(0)

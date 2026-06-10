@@ -5,6 +5,7 @@ import requests
 MODEL = "openrouter/free"
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
+OPENROUTER_API_KEY_PREFIX = "sk-or-v1-"
 
 TYPE_AXES = {
     0: {
@@ -145,6 +146,15 @@ class RateLimitError(RuntimeError):
 
 class InvalidAPIKeyError(ValueError):
     pass
+
+
+def validate_openrouter_api_key(api_key=OPENROUTER_API_KEY):
+    token = api_key.removeprefix(OPENROUTER_API_KEY_PREFIX)
+    return (
+        api_key.startswith(OPENROUTER_API_KEY_PREFIX)
+        and bool(token)
+        and not any(char.isspace() for char in api_key)
+    )
 
 
 class LoveStyleExplainer:
