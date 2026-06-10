@@ -154,15 +154,15 @@ def get_choice():
                 return choice
             else:
                 print("1 또는 2를 입력해주세요.")
-                time.sleep(1)
+                time.sleep(0.6)
                 sys.stdout.write("\033[F\033[K" * 2)
-                time.sleep(1)
+                time.sleep(0.2)
 
         except ValueError:
             print("숫자로 입력해주세요.")
-            time.sleep(1)
+            time.sleep(0.6)
             sys.stdout.write("\033[F\033[K" * 2)
-            time.sleep(1)
+            time.sleep(0.2)
 
             
 def print_transition():
