@@ -172,7 +172,7 @@ def print_transition():
     time.sleep(0.7)
     print("...")
     time.sleep(0.7)
-    sys.stdout.write("\033[F\033[K" * 16)
+    sys.stdout.write("\033[F\033[K" * 15)
     time.sleep(1)
 
 
