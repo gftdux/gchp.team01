@@ -40,11 +40,44 @@
 
 [실행 방법]
 ---
-TERMINAL을 열고 해당 프로그램 파일을 실행해 주세요. 
+Python 3.9 이상이 설치된 Windows, macOS, Linux에서 실행할 수 있습니다. 터미널을 열고 프로젝트 폴더로 이동한 뒤 운영체제에 맞는 명령을 실행해 주세요.
 
-실행 전에 OpenRouter API 키를 환경변수로 설정해야 합니다.
+### 1. 필요한 패키지 설치
+
+Windows PowerShell:
+```powershell
+py -m pip install -r requirements.txt
+```
+
+macOS 및 Linux:
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+### 2. OpenRouter API 키 설정
+
+Windows PowerShell:
 ```powershell
 $env:OPENROUTER_API_KEY="발급받은_API_키"
+```
+
+macOS 및 Linux의 bash 또는 zsh:
+```bash
+export OPENROUTER_API_KEY="발급받은_API_키"
+```
+
+환경변수는 해당 터미널 세션에만 적용됩니다. API 키를 설정한 터미널에서 프로그램을 실행해야 합니다.
+
+### 3. 프로그램 실행
+
+Windows PowerShell:
+```powershell
+py main.py
+```
+
+macOS 및 Linux:
+```bash
+python3 main.py
 ```
 
 *#주의사항! TERMINAL의 크기를 최대로 키워서 플레이해주시면 좋습니다.*
@@ -52,7 +85,7 @@ $env:OPENROUTER_API_KEY="발급받은_API_키"
 TERMINAL 화면에 연애 상황과 두 가지 행동 선택지가 출력되면, 번호를 입력 후 Enter 키를 누르시면 됩니다.
 테스트가 끝나면 TERMINAL에 곧바로 '당신의 연애 스타일'과 AI가 분석한 '심층 결과 리포트'가 출력됩니다.
 
-*#재실행시 기존 터미널을 종료하고, 새 터미널에서 실행하시길 바랍니다.*
+재실행할 때에는 같은 터미널에서 실행 명령을 다시 입력하면 됩니다.
 
 [실행 예시]
 ---
