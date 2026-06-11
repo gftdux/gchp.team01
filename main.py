@@ -4,7 +4,7 @@ from explain_module import validate_openrouter_api_key
 from get_result_module import get_result_module
 
 
-def typewriter(text, delay=0.066):
+def typewriter(text, delay=0.068):
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
