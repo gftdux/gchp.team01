@@ -4,7 +4,7 @@ from explain_module import validate_openrouter_api_key
 from get_result_module import get_result_module
 
 
-def typewriter(text, delay=0.07):
+def typewriter(text, delay=0.066):
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
@@ -382,15 +382,15 @@ if __name__ == "__main__":
 
     print("\033[H\033[J", end="")
     time.sleep(1.2)
-    print(f"당신의 연애 스타일 코드는 {mbti_result}입니다.")
+    print(f"당신의 연애 스타일 코드는 {mbti_result}입니다.!")
     
     time.sleep(1.2)
     print("\n집돌이(H) vs 야외형(O)\n\n다정형(K) vs 무심형(M)\n\n회피형(A) vs 돌진형(D)\n\n집착형(J) vs 방치형(B)\n\n")
     time.sleep(1.5)
     print(".")
-    time.sleep(1.7)
+    time.sleep(1.5)
     print(".")
-    time.sleep(1.8)
+    time.sleep(1.5)
     print(".")
     time.sleep(1)
 
